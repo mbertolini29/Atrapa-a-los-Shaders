@@ -9549,7 +9549,7 @@ MonoBehaviour:
   groundCheckPoint: {fileID: 1906837012}
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   gravityModifier: 2
   camTransform: {fileID: 1326410845}
   mouseSensitivity: 2
