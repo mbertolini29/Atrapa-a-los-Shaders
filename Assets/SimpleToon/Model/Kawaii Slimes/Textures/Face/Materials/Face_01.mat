@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SpiritMaterial
-  m_Shader: {fileID: 4800000, guid: 2546030748ba5434c92b602c93aefa44, type: 3}
+  m_Name: Face_01
+  m_Shader: {fileID: 4800000, guid: a5a39521d024143449fd830a34add712, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -22,17 +22,15 @@ Material:
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs: []
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: f261f5e5642a122459949a398033d017, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _GlowIntensity: 2
-    - _SpiritLength: 2
-    - _SpiritRadius: 0.3
-    - _SpiritSize: 0.53
-    - _TaperAmount: 0.2
-    - _WobbleAmount: 0.367
-    - _WobbleSpeed: 3.68
-    m_Colors:
-    - _MainColor: {r: 0.5, g: 0.8, b: 1, a: 0.5}
+    - _Frequency: 3
+    - _Speed: 1
+    m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1

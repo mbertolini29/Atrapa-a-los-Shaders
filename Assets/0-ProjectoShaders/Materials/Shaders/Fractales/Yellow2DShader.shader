@@ -1,4 +1,4 @@
-Shader "Unlit/YellowMaterial"
+Shader "Unlit/Yellow2DMaterial"
 {
     Properties
     {
@@ -39,7 +39,6 @@ Shader "Unlit/YellowMaterial"
             {
                 float2 uv : TEXCOORD0;
                 float4 vertex : SV_POSITION;
-                float4 screenPos : TEXCOORD1;
             };
 
             float _Size = 0.86;
@@ -54,17 +53,15 @@ Shader "Unlit/YellowMaterial"
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.screenPos = ComputeScreenPos(o.vertex);
                 o.uv = v.uv;
                 return o;
             }
             
             fixed4 frag (v2f i) : SV_Target
             {
-                // Obtener coordenadas de pantalla normalizadas
-                float2 screenUV = i.screenPos.xy / i.screenPos.w;
+                // Usar directamente las coordenadas UV
+                float2 uv = i.uv;
                 float2 resolution = _ScreenParams.xy;
-                float2 uv = screenUV;
                 
                 // Corregir aspecto
                 float fix = resolution.x / resolution.y;
@@ -74,23 +71,22 @@ Shader "Unlit/YellowMaterial"
                 
                 for(int idx = 0; idx < _Cantidad; idx++)
                 {           
-                    // Calcula un �ndice circular para cada iteraci�n.
+                    // Calcula un índice circular para cada iteración
                     float index = float(idx) * TWO_PI / float(_Cantidad);
                     
-                    // Grilla y escala.
-                    // Usar mod en lugar de fract para la grilla
-                    float2 formaGrilla = fmod(uv * float(_Cantidad), 1.0) - 0.5; //?
+                    // Grilla y escala
+                    float2 formaGrilla = fmod(uv * float(_Cantidad), 1.0) - 0.5;
                     
-                    //Escalar las formas dentro de cada celda. 
+                    // Escalar las formas dentro de cada celda
                     float scaleFactor = 0.75;
                     formaGrilla *= scaleFactor;
                     
-                    // Definir punto central en cada celda. 
+                    // Definir punto central en cada celda
                     float2 punto = formaGrilla;
                     float radio = length(punto);
                     float angulo = atan2(punto.y, punto.x);
                     
-                    // 
+                    // Formar el patrón
                     float forma = sin(angulo * _NumPoints + _Time.y * _AnimSpeed +
                                   sin(radio * 99.0) +
                                   sin(angulo * 15.0 + _Time.y * _AnimSpeed * 10.0)
@@ -112,7 +108,7 @@ Shader "Unlit/YellowMaterial"
                 
                 figuras /= float(_Cantidad);
                 
-                // Asegurar que los colores est�n en rango v�lido
+                // Asegurar que los colores estén en rango válido
                 figuras = saturate(figuras);
                 
                 return fixed4(figuras, 1.0);
