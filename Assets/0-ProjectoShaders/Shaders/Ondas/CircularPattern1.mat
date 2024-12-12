@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Black
+  m_Name: CircularPattern1
   m_Shader: {fileID: 4800000, guid: a5a39521d024143449fd830a34add712, type: 3}
   m_Parent: {fileID: 2100000, guid: 37ae77bc54b28ae4f9e21dec7eefa021, type: 2}
   m_ModifiedSerializedProperties: 0
