@@ -1,4 +1,4 @@
-Shader "Custom/SpiritRaymarching"
+Shader "Custom/CorrectSpiritRaymarching"
 {
     Properties
     {
@@ -8,6 +8,8 @@ Shader "Custom/SpiritRaymarching"
         _SpiritSize ("Spirit Size", Range(0.1, 2)) = 1.0
         _WobbleSpeed ("Wobble Speed", Range(0, 5)) = 1.0
         _WobbleAmount ("Wobble Amount", Range(0, 1)) = 0.1
+        _TaperAmount ("Taper Amount", Range(0, 1)) = 0.7    // Controla qué tan fino es en la parte superior
+        _AscendSpeed ("Ascend Speed", Range(0, 2)) = 0.5    // Velocidad de ascenso
     }
 
     SubShader
@@ -45,60 +47,76 @@ Shader "Custom/SpiritRaymarching"
             float _SpiritSize;
             float _WobbleSpeed;
             float _WobbleAmount;
+            float _TaperAmount;
+            float _AscendSpeed;
 
             #define MAX_STEPS 100
             #define MAX_DIST 100
             #define SURF_DIST 0.001
 
-            // Operaciones SDF
-            float smin(float a, float b, float k) {
+            float smin(float a, float b, float k)
+            {
                 float h = clamp(0.5 + 0.5 * (b - a) / k, 0.0, 1.0);
                 return lerp(b, a, h) - k * h * (1.0 - h);
             }
 
-            float sdSphere(float3 p, float radius) {
+            float sdSphere(float3 p, float radius)
+            {
                 return length(p) - radius;
             }
 
-            float sdEllipsoid(float3 p, float3 r) {
-                float k0 = length(p/r);
-                float k1 = length(p/(r*r));
-                return k0*(k0-1.0)/k1;
+            // Función modificada para crear una forma más cónica/estilizada
+            float sdTaperedShape(float3 p, float height, float baseRadius, float topRadius)
+            {
+                float2 q = float2(length(p.xz), p.y);
+                
+                // Calcular el radio en función de la altura (forma cónica)
+                float radius = lerp(baseRadius, topRadius, (-q.y + height/2) / height);
+                
+                // Suavizar los extremos
+                radius *= smoothstep(0, 0.1, height/2 - abs(q.y));
+                
+                return length(float2(q.x, max(abs(q.y) - height/2, 0.0))) - radius;
             }
 
-            float2 sdGhost(float3 p) {
-                // Tiempo para animación
+            float2 sdGhost(float3 p)
+            {
+                // Efecto de ascenso
+                float ascend = _Time.y * _AscendSpeed;
+                p.y -= ascend;
+
                 float t = _Time.y * _WobbleSpeed;
                 
-                // Wobble effect
-                float wobble = sin(t + p.y * 5.0) * _WobbleAmount;
-                p.x += wobble;
+                // Wobble más suave y etéreo
+                float wobble = sin(t + p.y * 2.0) * _WobbleAmount;
+                p.x += wobble * smoothstep(-1, 1, p.y);
                 
-                // Cuerpo principal (forma de gota alargada)
-                float3 bodyPos = p;
-                bodyPos.y += 0.2; // Ajustar posición vertical
-                float3 bodyScale = float3(0.45, 0.75, 0.5) * _SpiritSize;
-                float body = sdEllipsoid(bodyPos, bodyScale);
+                // Forma principal estilizada y afinada hacia arriba
+                float height = 1.0 * _SpiritSize;
+                float baseRadius = 0.4 * _SpiritSize;     // Radio más grande en la base
+                float topRadius = 0.1 * _SpiritSize * (1.0 - _TaperAmount);  // Radio más pequeño arriba
                 
-                // Parte inferior ondulante
-                float bottomWave = sin(p.x * 4.0 + t) * 0.1;
-                float bottom = sdEllipsoid(float3(p.x, p.y + 0.5 + bottomWave, p.z), 
-                                           float3(0.4, 0.3, 0.4) * _SpiritSize);
+                float body = sdTaperedShape(p, height, baseRadius, topRadius);
                 
-                // Combinar cuerpo y parte inferior
-                float ghost = smin(body, bottom, 0.2);
+                // Agregar una forma más redondeada en la base
+                float bottomSphere = sdSphere(p + float3(0, height/2, 0), baseRadius * 0.8);
+                body = smin(body, bottomSphere, 0.2);
                 
-                // Ojos
-                float3 eyeOffset = float3(0.15, 0.32, 0.3) * _SpiritSize;
-                float leftEye = sdSphere(p + eyeOffset, 0.08);
-                float rightEye = sdSphere(p + float3(-eyeOffset.x, eyeOffset.y, eyeOffset.z), 0.08);
+                // Ojos cerca de la parte superior
+                float3 eyeOffset = float3(0.12, -height/3, 0.2) * _SpiritSize;
+                float eyeSize = 0.06 * _SpiritSize;
+                float leftEye = sdSphere(p + eyeOffset, eyeSize);
+                float rightEye = sdSphere(p + float3(-eyeOffset.x, eyeOffset.y, eyeOffset.z), eyeSize);
                 float eyes = min(leftEye, rightEye);
                 
-                // Retornar distancia y ID material (0 para cuerpo, 1 para ojos)
-                return float2(ghost, eyes < ghost ? 1 : 0);
+                // Agregar ondulación vertical suave
+                body += sin(p.y * 8.0 + t) * 0.02 * _WobbleAmount;
+                
+                return float2(body, eyes < body ? 1 : 0);
             }
 
-            float2 GetDist(float3 p) {
+            float2 GetDist(float3 p)
+            {
                 return sdGhost(p);
             }
 
@@ -135,7 +153,6 @@ Shader "Custom/SpiritRaymarching"
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = v.uv;
                 
-                // Transform ray origin and hit position to object space
                 float3 worldVertex = mul(unity_ObjectToWorld, v.vertex).xyz;
                 o.rayOrigin = mul(unity_WorldToObject, float4(_WorldSpaceCameraPos, 1)).xyz;
                 o.hitPos = v.vertex.xyz;
@@ -156,32 +173,39 @@ Shader "Custom/SpiritRaymarching"
                     float3 p = ro + rd * d;
                     float3 n = GetNormal(p);
                     
-                    // Lighting
                     float3 lightDir = normalize(float3(1, 1, -1));
                     float diff = dot(n, lightDir) * 0.5 + 0.5;
                     
-                    // Fresnel
                     float fresnel = pow(1 - dot(n, -rd), 3.0);
                     
                     // Color base
                     if(GetDist(p).y == 0)
+                    {
                         col.rgb = _MainColor.rgb * diff;
+                        
+                        // Gradiente vertical para hacer más transparente la parte inferior
+                        float verticalGradient = smoothstep(-0.5, 0.5, p.y);
+                        col.a = _MainColor.a * verticalGradient;
+                    }
                     else
+                    {
                         col.rgb = _EyeColor.rgb;
+                        col.a = 1.0;
+                    }
                     
                     // Efecto de brillo interno
                     float innerGlow = exp(-length(p) * 2.0) * _GlowIntensity;
                     col.rgb += _MainColor.rgb * innerGlow;
                     
-                    // Fresnel effect
-                    col.rgb += fresnel * _MainColor.rgb * _GlowIntensity;
+                    // Efecto de borde fantasmal
+                    col.rgb += fresnel * _MainColor.rgb * _GlowIntensity * 0.3;
                     
-                    // Fade from center
+                    // Fade desde el centro
                     float fade = 1 - length(p) / (_SpiritSize * 1.5);
-                    col.a = saturate(fade * _MainColor.a);
+                    col.a *= saturate(fade);
                     
-                    // Add some ethereal glow
-                    col.rgb += _MainColor.rgb * pow(fresnel, 2.0) * 0.5;
+                    // Hacer más transparente la parte inferior
+                    col.a *= smoothstep(-1, 0.5, p.y);
                 }
                 else
                 {
@@ -190,7 +214,6 @@ Shader "Custom/SpiritRaymarching"
 
                 return col;
             }
-
             ENDCG
         }
     }

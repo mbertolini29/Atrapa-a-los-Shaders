@@ -26,14 +26,16 @@ Material:
     m_Ints: []
     m_Floats:
     - _GlowIntensity: 2
+    - _ParticleAmount: 0
+    - _ParticleSpeed: 0
     - _SpiritLength: 2
     - _SpiritRadius: 0.3
-    - _SpiritSize: 0.43
+    - _SpiritSize: 0.4
     - _TaperAmount: 0.2
     - _WobbleAmount: 0.1
     - _WobbleSpeed: 2
     m_Colors:
     - _EyeColor: {r: 1, g: 1, b: 1, a: 1}
-    - _MainColor: {r: 0, g: 0, b: 0, a: 0.76862746}
+    - _MainColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
