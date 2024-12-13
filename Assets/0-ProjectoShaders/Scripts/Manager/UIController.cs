@@ -9,7 +9,8 @@ public class UIController : MonoBehaviour
 
     public Slider healthSlider;
     public Text healthText;
-    public Text ammoText;
+    //public Text ammoText;
+    public Text SpiritusText;
 
     public Image damageEffect;
     public float damageAlpha = .25f;
@@ -18,6 +19,8 @@ public class UIController : MonoBehaviour
     public float flashDuration = 0.1f;
 
     public GameObject pauseScreen;
+
+    //public GameObject endScreen;
 
     public Image blackScreen;
     public float fadeSpeed = 1.5f;

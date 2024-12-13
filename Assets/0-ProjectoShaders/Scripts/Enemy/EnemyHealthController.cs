@@ -8,6 +8,8 @@ public class EnemyHealthController : MonoBehaviour
 
     public EnemyController theEC; //para saber si tiene un libreto de enemy controller
 
+    public GameObject spiritPrefab;
+
     void Start()
     {
         
@@ -22,16 +24,23 @@ public class EnemyHealthController : MonoBehaviour
     {
         currentHealth -= damageAmount;
 
-        if(theEC != null)
-        {
-            theEC.GetShot();
-        }
+        //if(theEC != null)
+        //{
+        //    theEC.GetShot();
+        //}
 
         if(currentHealth <= 0)
         {
+            //instanciar espiritu
+            if(spiritPrefab != null)
+            {
+                Instantiate(spiritPrefab, spiritPrefab.transform.position, spiritPrefab.transform.rotation);
+            }
+
+            //
             Destroy(gameObject);
 
-            AudioManager.instance.PlaySFX((int)fxSound.damageEnemy); //muerte
+            //AudioManager.instance.PlaySFX((int)fxSound.damageEnemy); //muerte
         }
     }
 }

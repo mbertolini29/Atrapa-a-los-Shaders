@@ -25,9 +25,6 @@ public class Gun : MonoBehaviour
     [Header("GunName")]
     public string gunName;
 
-
-
-
     void Start()
     {
         
@@ -50,6 +47,6 @@ public class Gun : MonoBehaviour
             currentAmmo = maxAmmo;
         }
 
-        UIController.instance.ammoText.text = currentAmmo + "/" + maxAmmo;
+        //UIController.instance.ammoText.text = currentAmmo + "/" + maxAmmo;
     }
 }

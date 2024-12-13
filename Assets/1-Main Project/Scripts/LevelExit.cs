@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class LevelExit : MonoBehaviour
 {
-    public string nextLevel;
-    public float waitToEndLevel;
+    //public string nextLevel;
+    //public float waitToEndLevel;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -14,19 +14,27 @@ public class LevelExit : MonoBehaviour
         {
             GameManager.instance.levelEnding = true;
 
-            StartCoroutine(EndLevelCo());
+            //
+            GameManager.instance.PlayerWin(); 
+
+            //StartCoroutine(EndLevelCo());
 
             AudioManager.instance.PlayLevelVictory();
         }
     }
 
-    public IEnumerator EndLevelCo()
-    {
-        PlayerPrefs.SetString(nextLevel + "_cp", ""); //reinicia los checkpoint
-        PlayerPrefs.SetString("CurrentLevel", nextLevel); //para que continue en el estado que dejaste el juego.
+    //public IEnumerator EndLevelCo()
+    //{
+    //    PlayerPrefs.SetString(nextLevel + "_cp", ""); //reinicia los checkpoint
+    //    PlayerPrefs.SetString("CurrentLevel", nextLevel); //para que continue en el estado que dejaste el juego.
 
-        yield return new WaitForSeconds(waitToEndLevel);
+    //    yield return new WaitForSeconds(waitToEndLevel);
 
-        SceneManager.LoadScene(nextLevel);
-    }
+    //    SceneManager.LoadScene(nextLevel);
+    //}
+
+    //public void Ganaste()
+    //{
+
+    //}
 }

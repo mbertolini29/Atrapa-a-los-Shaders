@@ -28,6 +28,16 @@ public class PlayerController : MonoBehaviour
     public bool invertX;
     public bool invertY;
 
+    [Header("Coleccionables")]
+    public int collectedSpritis = 0;
+    public int allCollectedSpritis = 1;
+    
+    [Header("Portal")]
+    public GameObject portal; 
+
+    [Header("Flash Disparo")]
+    public GameObject muzzleFlash;
+
     [Header("Gun")]
     public Gun activeGun;
     public int currentGun = 1;
@@ -40,10 +50,9 @@ public class PlayerController : MonoBehaviour
     Transform initialPosGunHolder;
     Vector3 gunStartPos;
     Vector3 gunStartRot;
-    public float adsSpeed = 2f;
+    public float adsSpeed = 2f;    
 
-    public GameObject muzzleFlash;
-
+    [Header("Sonidos Pasos")]
     //public AudioSource footstepFast;
     public AudioSource footstepSlow;
 
@@ -63,11 +72,11 @@ public class PlayerController : MonoBehaviour
     {
         //camTransform = GetComponentInChildren<Camera>().transform;
         charControl = GetComponent<CharacterController>();
-        anim = GetComponent<Animator>();
+        //anim = GetComponent<Animator>();
 
         //change weapon
-        currentGun--;
-        SwitchGun();
+        //currentGun--;
+        //SwitchGun();
 
         gunStartPos = gunHolder.localPosition; //punto inicial del arma
         initialPosGunHolder = gunHolder; //para no perder la rotacion del arma
@@ -104,16 +113,16 @@ public class PlayerController : MonoBehaviour
             //pero depende mucho de la compu en la que jueges, y los fps
             //canJump = Physics.OverlapSphere(groundCheckPoint.position, .25f, whatIsGround).Length > 0;
 
-            JumpPlayer();            
+            //JumpPlayer();            
 
             //lanza al jugador para arriba
-            if (bounce)
-            {
-                bounce = false;
-                moveInput.y = bounceAmount;
+            //if (bounce)
+            //{
+            //    bounce = false;
+            //    moveInput.y = bounceAmount;
 
-                canDoubleJump = true;
-            }
+            //    canDoubleJump = true;
+            //}
 
             charControl.Move(moveInput * Time.deltaTime);
 
@@ -125,16 +134,16 @@ public class PlayerController : MonoBehaviour
             Shooting();
 
             //cambiar de arma
-            if (Input.GetButtonDown("Switch Gun"))
-            {
-                SwitchGun();
-            }
+            //if (Input.GetButtonDown("Switch Gun"))
+            //{
+            //    SwitchGun();
+            //}
 
-            GunSight();           
+            //GunSight();           
 
             //magnitud de nuestro input, cuando agarramos fuerza en el eje
-            anim.SetFloat("moveSpeed", moveInput.magnitude);
-            anim.SetBool("onGround", canJump); //si puede saltar, esta en el piso..
+            //anim.SetFcloat("moveSpeed", moveInput.magnitude);
+            //anim.SetBool("onGround", canJump); //si puede saltar, esta en el piso..
         }        
     }
 
@@ -150,13 +159,13 @@ public class PlayerController : MonoBehaviour
         {
             moveInput *= runSpeed;
             isRunning = true;
-            anim.SetBool("isRunning", isRunning); //esta corriendo..
+            //anim.SetBool("isRunning", isRunning); //esta corriendo..
         }
         else
         {
             moveInput *= moveSpeed;
             isRunning = false;
-            anim.SetBool("isRunning", isRunning); //No esta corriendo..
+            //anim.SetBool("isRunning", isRunning); //No esta corriendo..
         }
     }
 
@@ -290,7 +299,7 @@ public class PlayerController : MonoBehaviour
             
             activeGun.fireCounter = activeGun.fireRate;
 
-            UIController.instance.ammoText.text = activeGun.currentAmmo + "/" + activeGun.maxAmmo;
+            //UIController.instance.ammoText.text = activeGun.currentAmmo + "/" + activeGun.maxAmmo;
 
             muzzleFlash.SetActive(true);
         }
@@ -313,7 +322,7 @@ public class PlayerController : MonoBehaviour
         activeGun.gameObject.SetActive(true);
 
         //cambia la municion
-        UIController.instance.ammoText.text = activeGun.currentAmmo + "/" + activeGun.maxAmmo;
+        //UIController.instance.ammoText.text = activeGun.currentAmmo + "/" + activeGun.maxAmmo;
     }
 
     public void AddGun(string gunToAdd)
@@ -348,4 +357,29 @@ public class PlayerController : MonoBehaviour
         bounceAmount = bounceForce; //
         bounce = true;
     }
+
+    //
+    public void CollectSpirit(int value)
+    {
+        collectedSpritis += value;
+
+        //Debug.Log($"Spirits Collected: { collectedSpritis} ");
+
+        UIController.instance.SpiritusText.text = $"{collectedSpritis} / {allCollectedSpritis}";
+
+        //
+        ActivarPortal();
+    }
+
+    public void ActivarPortal()
+    {
+        if (collectedSpritis >= allCollectedSpritis)
+        {
+            if (portal != null)
+            {
+                portal.SetActive(true);
+            }
+        }
+    }
+
 }

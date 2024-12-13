@@ -12,6 +12,10 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public bool levelEnding;
 
+    [Header("Panel ganaste/perdiste")]
+    public GameObject PanelWin;
+    public GameObject PanelLose;
+
     private void Awake()
     {
         instance = this;
@@ -40,7 +44,21 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(waitAfterDying);
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        PanelLose.SetActive(true);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void PlayerWin()
+    {
+        StartCoroutine(PlayerWinCo());
+    }      
+
+    public IEnumerator PlayerWinCo()
+    {
+        yield return new WaitForSeconds(waitAfterDying);
+
+        PanelWin.SetActive(true);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void PauseUnpause()
