@@ -53,8 +53,8 @@ public class BulletController : MonoBehaviour
             //Debug.Log("hit player: " + transform.position);
         }
 
-        Destroy(gameObject);
-
         Instantiate(impactEffect, transform.position + (transform.forward * (-moveSpeed * Time.deltaTime)), transform.rotation);
+        
+        Destroy(gameObject);
     }
 }

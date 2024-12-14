@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyHealthController : MonoBehaviour
 {
-    public int currentHealth = 5;
+    public int currentHealth = 2;
 
     public EnemyController theEC; //para saber si tiene un libreto de enemy controller
 

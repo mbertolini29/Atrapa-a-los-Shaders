@@ -6,6 +6,7 @@ TagManager:
   tags:
   - HeadShot
   - Enemy
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - EnemyBullet
   - TriggerZone
   - PostProcessing
-  - 
+  - Obstacle
   - 
   - 
   - 

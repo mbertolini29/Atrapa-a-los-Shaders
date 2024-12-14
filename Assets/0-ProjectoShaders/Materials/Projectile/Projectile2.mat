@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Projectile1
-  m_Shader: {fileID: -6465566751694194690, guid: c32ffc7cf5279204e9e4b2bbb596d907, type: 3}
-  m_Parent: {fileID: -876546973899608171, guid: c32ffc7cf5279204e9e4b2bbb596d907, type: 3}
+  m_Name: Projectile2
+  m_Shader: {fileID: 4800000, guid: 73bdd234a484a984c8213236ec202226, type: 3}
+  m_Parent: {fileID: 2100000, guid: 51c7197a396eb5946a457900d23eed18, type: 2}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -35,7 +35,6 @@ Material:
     - _WaveAmplitude: 0.025
     m_Colors:
     - _Color: {r: 0.9150943, g: 0.78060585, b: 0.082013145, a: 1}
-    - _Tiling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &7897829089524204029

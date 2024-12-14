@@ -90,23 +90,23 @@ public class PlayerController : MonoBehaviour
             //moveInput.z = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime;
 
             //guardar Y velocity
-            float yStore = moveInput.y;
+            //float yStore = moveInput.y;
 
             //para que el movimiento y la camara se mueva en base al jugador,
             Vector3 verMove = transform.forward * Input.GetAxis("Vertical");
             Vector3 horiMove = transform.right * Input.GetAxis("Horizontal");
 
             MovePlayer(verMove, horiMove);
-            RunPlayer();
+            //RunPlayer();
 
-            moveInput.y = yStore;
+            //moveInput.y = yStore;
 
             //gravedad
-            moveInput.y += Physics.gravity.y * gravityModifier * Time.deltaTime;
-            if (charControl.isGrounded)
-            {
-                moveInput.y = Physics.gravity.y * gravityModifier * Time.deltaTime;
-            }
+            //moveInput.y += Physics.gravity.y * gravityModifier * Time.deltaTime;
+            //if (charControl.isGrounded)
+            //{
+            //    moveInput.y = Physics.gravity.y * gravityModifier * Time.deltaTime;
+            //}
 
             //esto indica q si el jugador esta tocando el piso puede saltar
             //este sirve para determinar en que capa podes saltar
@@ -151,6 +151,9 @@ public class PlayerController : MonoBehaviour
     {
         moveInput = horiMove + verMove;
         moveInput.Normalize(); //para normalizar el movimiento, sino cuando apretas hacia delante y al costado, va en diagonal mas rapido que yendo de frente
+
+        moveInput *= moveSpeed;
+
     }
 
     void RunPlayer()
