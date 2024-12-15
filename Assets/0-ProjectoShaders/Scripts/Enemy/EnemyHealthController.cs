@@ -10,16 +10,6 @@ public class EnemyHealthController : MonoBehaviour
 
     public GameObject spiritPrefab;
 
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
     public void DamageEnemy(int damageAmount)
     {
         currentHealth -= damageAmount;

@@ -31,18 +31,18 @@ public class MainMenu : MonoBehaviour
 
     public void Continue()
     {
-        SceneManager.LoadScene(PlayerPrefs.GetString("CurrentLevel"));
+        //SceneManager.LoadScene(PlayerPrefs.GetString("CurrentLevel"));
     }
 
     public void PlayGame()
     {
-        SceneManager.LoadScene(firstLevel);
+        //SceneManager.LoadScene(firstLevel);
 
-        PlayerPrefs.SetString("CurrentLevel", ""); //reinicia la info guardada..
-        PlayerPrefs.SetString(firstLevel + "_cp", ""); //reinicia los checkpoint
+        //PlayerPrefs.SetString("CurrentLevel", ""); //reinicia la info guardada..
+        //PlayerPrefs.SetString(firstLevel + "_cp", ""); //reinicia los checkpoint
 
-        Time.timeScale = 1f;
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        //Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void QuitGame()

@@ -47,11 +47,11 @@ public class BulletController : MonoBehaviour
         //    //Debug.Log("Headshot");
         //}
 
-        if (other.gameObject.tag == "Player" && damagePlayer)
-        {
-            PlayerHealthController.instance.DamagePlayer(damageBullet);
-            //Debug.Log("hit player: " + transform.position);
-        }
+        //if (other.gameObject.tag == "Player" && damagePlayer)
+        //{
+        //    PlayerHealthController.instance.DamagePlayer(damageBullet);
+        //    //Debug.Log("hit player: " + transform.position);
+        //}
 
         Instantiate(impactEffect, transform.position + (transform.forward * (-moveSpeed * Time.deltaTime)), transform.rotation);
         
