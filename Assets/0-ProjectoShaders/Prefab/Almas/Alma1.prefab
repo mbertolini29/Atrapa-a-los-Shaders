@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6366465132487148197}
   - component: {fileID: 7198592609466724222}
   - component: {fileID: 2559724892558892357}
+  - component: {fileID: 7434390317177881991}
   m_Layer: 0
   m_Name: Alma1
   m_TagString: Untagged
@@ -27,9 +28,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 506637430429372311}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.081030294, y: 0.02307457, z: -0.9964434, w: -0.0015141232}
-  m_LocalPosition: {x: 7.4999995, y: 5.27, z: 14.22}
-  m_LocalScale: {x: 3.9999998, y: 6, z: 3.9999998}
+  m_LocalRotation: {x: 0.51098037, y: 0.054276813, z: 0.8576957, w: -0.01764234}
+  m_LocalPosition: {x: -6.31, y: 4.51, z: 6.99}
+  m_LocalScale: {x: 1.5985441, y: 6.6454554, z: 12.658623}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -102,9 +103,22 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0.18, z: 0}
+--- !u!114 &7434390317177881991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506637430429372311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fef36495c54cb64c8d7671796f981e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spritValue: 1

@@ -44,6 +44,9 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(waitAfterDying);
 
+        Cursor.visible = true;
+
+        Cursor.lockState = CursorLockMode.None;
         PanelLose.SetActive(true);
         //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
@@ -57,6 +60,10 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(waitAfterDying);
 
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         PanelWin.SetActive(true);
         //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
@@ -67,7 +74,7 @@ public class GameManager : MonoBehaviour
         if (UIController.instance.pauseScreen.activeInHierarchy)
         {
             UIController.instance.pauseScreen.SetActive(false);
-            
+
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
@@ -80,7 +87,7 @@ public class GameManager : MonoBehaviour
             UIController.instance.pauseScreen.SetActive(true);
 
             Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = false;
+            Cursor.visible = true;
 
             Time.timeScale = 0f;
 

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1374697316733927268}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 141848628196575664}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.151, z: 0.056}
+  m_LocalPosition: {x: 0, y: 0.151, z: 0.451}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -57,7 +57,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.3364872, z: 0, w: 0.9416881}
   m_LocalPosition: {x: 0.04, y: 1, z: -17.66}
-  m_LocalScale: {x: 3.5, y: 3.5, z: 3.5}
+  m_LocalScale: {x: 4.5, y: 4.5, z: 4.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5859894990743872996}
@@ -226,7 +226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56042372f867c264e95b59246a25b8d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 2
+  currentHealth: 5
   theEC: {fileID: 0}
   spiritPrefab: {fileID: 8876807759804874522, guid: eeee3f666994a2049a89c5241702aeb3, type: 3}
 --- !u!114 &7224342945060306095
@@ -254,8 +254,8 @@ MonoBehaviour:
   playerMask:
     serializedVersion: 2
     m_Bits: 1024
-  shootInterval: 2
-  rotationSpeed: 5
+  shootInterval: 1
+  rotationSpeed: 15
   canSeePlayer: 0
 --- !u!1 &4483083348200817523
 GameObject:
